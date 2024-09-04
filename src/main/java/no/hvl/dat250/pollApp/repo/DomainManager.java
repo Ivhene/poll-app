@@ -31,24 +31,37 @@ public class DomainManager {
         return users.values();
     }
 
+    public void deleteUser(String username) {
+        users.remove(username);
+    }
+
     // Poll Management
 
-    public Poll createPoll(String question, String createdByUsername, List<String> optionTexts, Instant validUntil) {
-        Poll poll = new Poll(question, validUntil, Instant.now(), users.get(createdByUsername));
-        polls.put(poll.getId(), poll);
-
-        List<VoteOption> options = new ArrayList<>();
-
-        for (int i = 0; i < optionTexts.size(); i++) {
-            VoteOption option = new VoteOption(optionTexts.get(i), i, poll);
-            voteOptions.put(option.getId(), option);
-            options.add(option);
+    public Poll createPoll(Poll poll) {
+        // Ensure options list is initialized and has at least 2 options
+        if (poll.getOptions() == null && poll.getOptions().size() > 1) {
+            return null;
         }
 
-        poll.setOptions(options);
+        // Update the user
+        // Allows for user to be null
+        User user = poll.getCreatedUser();
+        if (user != null) {
+            user.getPolls().add(poll);
+            users.put(user.getUsername(), user);
+        }
+
+        // Add poll to storage
+        polls.put(poll.getId(), poll);
+
+        for (VoteOption option : poll.getOptions()) {
+            option.setPoll(poll); // Set the poll reference for each option
+            voteOptions.put(option.getId(), option);
+        }
 
         return poll;
     }
+
 
     public Poll getPollById(String pollId) {
         return polls.get(pollId);
@@ -58,6 +71,25 @@ public class DomainManager {
         return polls.values();
     }
 
+    public void deletePoll(String pollId) {
+        // removes the poll
+        Poll poll = polls.remove(pollId);
+
+        // removes the votes
+        for(Vote vote : votes.values()) {
+            if (vote.getOption().getPoll().equals(poll)) {
+                votes.remove(vote.getId());
+            }
+        }
+
+        // remove all options
+        for(VoteOption voteOption : poll.getOptions()) {
+            voteOptions.remove(voteOption.getId());
+        }
+
+        poll.getCreatedUser().getPolls().remove(poll); // remove the poll from the user
+    }
+
     // VoteOption Management
 
     public VoteOption getVoteOptionById(String voteOptionId) {
@@ -65,23 +97,53 @@ public class DomainManager {
     }
 
     public Collection<VoteOption> getVoteOptionsByPollId(String pollId) {
-        List<VoteOption> options = new ArrayList<>();
-        for (VoteOption option : voteOptions.values()) {
-            if (option.getPoll().getId().equals(pollId)) {
-                options.add(option);
-            }
-        }
-        return options;
+        Poll poll = polls.get(pollId);
+
+        return poll.getOptions();
     }
 
     // Vote Management
 
-    public Vote castVote(String username, String pollId, String voteOptionId) {
-        // Optionally, add validation to ensure user and poll exist, and the option belongs to the poll
-        Vote vote = new Vote(Instant.now(), users.get(username), voteOptions.get(voteOptionId));
+    public Vote castVote(Vote vote) {
+        // Delete existing vote for the same user and option
+        User user = vote.getUser();
+        VoteOption option = vote.getOption();
+        Poll poll = option != null ? option.getPoll() : null;
+
+        if (user != null && poll != null) {
+            // Remove existing votes
+            votes.values().removeIf(v -> v.getUser().equals(user) && v.getOption().getPoll().equals(poll));
+        }
+
+        // Add new vote
         votes.put(vote.getId(), vote);
+
+        // Update the User's votes
+        if (user != null) {
+            // Ensure the user is in the map
+            if (!users.containsKey(user.getUsername())) {
+                users.put(user.getUsername(), user);
+            }
+            // Update the user's votes list
+            User existingUser = users.get(user.getUsername());
+            existingUser.getVotes().add(vote);
+        }
+
+        // Update the VoteOption's votes
+        if (option != null) {
+            // Ensure the vote option is in the map
+            if (!voteOptions.containsKey(option.getId())) {
+                voteOptions.put(option.getId(), option);
+            }
+            // Update the vote option's votes list
+            VoteOption existingOption = voteOptions.get(option.getId());
+            existingOption.getVotes().add(vote);
+        }
+
         return vote;
     }
+
+
 
     public Collection<Vote> getVotesByPollId(String pollId) {
         List<Vote> pollVotes = new ArrayList<>();
@@ -101,5 +163,9 @@ public class DomainManager {
             }
         }
         return userVotes;
+    }
+
+    public void deleteVote(String voteId) {
+        votes.remove(voteId);
     }
 }

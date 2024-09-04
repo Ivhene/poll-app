@@ -1,15 +1,29 @@
 package no.hvl.dat250.pollApp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class VoteOption {
+    @JsonProperty("id")
     private String id;
+
+    @JsonProperty("caption")
     private String caption;
+
+    @JsonProperty("presentationOrder")
     private int presentationOrder;
+
+    @JsonBackReference("poll-options") // Unique reference name
+    @JsonProperty("poll")
     private Poll poll;
-    private List<Vote> votes;
+
+    @JsonManagedReference("option-votes") // Unique reference name
+    @JsonProperty("votes")
+    private List<Vote> votes = new ArrayList<>();
 
     public VoteOption() {
     }
@@ -19,9 +33,9 @@ public class VoteOption {
         this.caption = caption;
         this.presentationOrder = presentationOrder;
         this.poll = poll;
-        votes = new ArrayList<Vote>();
     }
 
+    @JsonProperty("id")
     public String getId() {
         return id;
     }
@@ -30,6 +44,7 @@ public class VoteOption {
         this.id = id;
     }
 
+    @JsonProperty("caption")
     public String getCaption() {
         return caption;
     }
@@ -38,6 +53,7 @@ public class VoteOption {
         this.caption = caption;
     }
 
+    @JsonProperty("presentationOrder")
     public int getPresentationOrder() {
         return presentationOrder;
     }
@@ -46,6 +62,7 @@ public class VoteOption {
         this.presentationOrder = presentationOrder;
     }
 
+    @JsonProperty("poll")
     public Poll getPoll() {
         return poll;
     }
@@ -54,6 +71,7 @@ public class VoteOption {
         this.poll = poll;
     }
 
+    @JsonProperty("votes")
     public List<Vote> getVotes() {
         return votes;
     }

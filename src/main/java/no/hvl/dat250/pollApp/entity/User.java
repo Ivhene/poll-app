@@ -1,20 +1,28 @@
 package no.hvl.dat250.pollApp.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-
+    @JsonProperty("username")
     private String username;
+
+    @JsonProperty("email")
     private String email;
-    private List<Poll> polls;
-    private List<Vote> votes;
+
+    @JsonManagedReference("user-polls") // Unique reference name
+    @JsonProperty("polls")
+    private List<Poll> polls = new ArrayList<>();
+
+    @JsonManagedReference("user-votes") // Unique reference name
+    @JsonProperty("votes")
+    private List<Vote> votes = new ArrayList<>();
 
     public User() {
         this.username = "";
         this.email = "";
-        polls = new ArrayList<Poll>();
-        votes = new ArrayList<Vote>();
     }
 
     public User(String username, String email) {
@@ -22,6 +30,7 @@ public class User {
         this.email = email;
     }
 
+    @JsonProperty("username")
     public String getUsername() {
         return username;
     }
@@ -30,6 +39,7 @@ public class User {
         this.username = username;
     }
 
+    @JsonProperty("email")
     public String getEmail() {
         return email;
     }
@@ -38,6 +48,7 @@ public class User {
         this.email = email;
     }
 
+    @JsonProperty("polls")
     public List<Poll> getPolls() {
         return polls;
     }
@@ -46,6 +57,7 @@ public class User {
         this.polls = polls;
     }
 
+    @JsonProperty("votes")
     public List<Vote> getVotes() {
         return votes;
     }

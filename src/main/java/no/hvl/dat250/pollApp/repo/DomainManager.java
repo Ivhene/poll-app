@@ -23,6 +23,13 @@ public class DomainManager {
         return user;
     }
 
+    public User updateUser(String username , User user) {
+        // Allows users to change username
+        users.remove(username);
+        users.put(user.getUsername(), user);
+        return user;
+    }
+
     public User getUserById(String username) {
         return users.get(username);
     }
@@ -32,7 +39,25 @@ public class DomainManager {
     }
 
     public void deleteUser(String username) {
-        users.remove(username);
+        // remove the user itself
+        User user = users.remove(username);
+
+        // remove the users polls and votes
+        for(Poll poll : user.getPolls()) {
+            polls.remove(poll.getId());
+            // Remove the options in the poll
+            for(VoteOption option : poll.getOptions()) {
+                voteOptions.remove(option.getId());
+
+                // remove the votes on the poll
+                for(Vote vote : option.getVotes()) {
+                    votes.remove(vote.getId());
+                }
+            }
+        }
+        for(Vote vote : user.getVotes()) {
+            votes.remove(vote.getId());
+        }
     }
 
     // Poll Management
@@ -104,10 +129,11 @@ public class DomainManager {
 
     // Vote Management
 
-    public Vote castVote(Vote vote) {
+    public Vote castVote(String voteoptionId, Vote vote) {
         // Delete existing vote for the same user and option
         User user = vote.getUser();
-        VoteOption option = vote.getOption();
+        VoteOption option = voteOptions.get(voteoptionId);
+        vote.setOption(option);
         Poll poll = option != null ? option.getPoll() : null;
 
         if (user != null && poll != null) {
@@ -166,6 +192,17 @@ public class DomainManager {
     }
 
     public void deleteVote(String voteId) {
-        votes.remove(voteId);
+        // Remove the vote itself
+        Vote vote = votes.remove(voteId);
+
+        // Remove the vote from the user object
+        vote.getUser().getVotes().remove(vote);
+        users.put(vote.getUser().getUsername(), vote.getUser());
+
+        // Remove the vote from the voteOption and poll objects
+        vote.getOption().getPoll().getOptions().remove(vote.getOption());
+        vote.getOption().getVotes().remove(vote);
+        voteOptions.put(vote.getOption().getId(), vote.getOption());
+        vote.getOption().getPoll().getOptions().add(vote.getOption());
     }
 }

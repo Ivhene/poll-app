@@ -37,8 +37,8 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<User> updateUser(@RequestBody User user) {
-        User updatedUser = domainManager.addUser(user);
+    public ResponseEntity<User> updateUser(@PathVariable String userId, @RequestBody User user) {
+        User updatedUser = domainManager.updateUser(userId, user);
 
         return ResponseEntity.ok(updatedUser);
     }

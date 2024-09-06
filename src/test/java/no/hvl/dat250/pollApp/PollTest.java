@@ -46,8 +46,8 @@ public class PollTest {
         int votesCount = domainManager.getVotesByPollId(poll.getId()).size();
         Vote vote1 = new Vote(user2, poll.getOptions().get(1));
         Vote vote2 = new Vote(user2, poll.getOptions().get(0));
-        domainManager.castVote(vote1);
-        domainManager.castVote(vote2);
+        domainManager.castVote(poll.getOptions().get(1).getId(), vote1);
+        domainManager.castVote(poll.getOptions().get(0).getId(), vote2);
 
         assertEquals(votesCount + 1, domainManager.getVotesByPollId(poll.getId()).size());
         assertTrue(domainManager.getVotesByPollId(poll.getId()).contains(vote2));

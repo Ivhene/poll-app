@@ -7,6 +7,6 @@ This repository contains my solution to the poll app assignment in DAT250 at HVL
 
 
 ## Problems
-
+The only real problem I 
 
 ## Remaining work

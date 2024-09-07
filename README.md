@@ -7,6 +7,6 @@ This repository contains my solution to the poll app assignment in DAT250 at HVL
 
 
 ## Problems
-The only real problem I encountered was when figuring out how to define the JSON objects without having infinite cycles of objects. I ended up solving this by using the ```java @JsonManagedReference ``` and ```java @JsonBackReference ```.
+The only real problem I encountered was when figuring out how to define the JSON objects without having infinite cycles of objects. I ended up solving this by using the ```@JsonManagedReference``` and ```@JsonBackReference```.
 
 ## Remaining work

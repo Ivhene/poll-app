@@ -72,6 +72,7 @@ public class DomainManager {
         // Allows for user to be null
         User user = poll.getCreatedUser();
         if (user != null) {
+            user.getPolls().removeIf(p -> p.getId().equals(poll.getId()));
             user.getPolls().add(poll);
             users.put(user.getUsername(), user);
         }
@@ -112,7 +113,10 @@ public class DomainManager {
             voteOptions.remove(voteOption.getId());
         }
 
-        poll.getCreatedUser().getPolls().remove(poll); // remove the poll from the user
+        // remove the poll from the user
+        User user = poll.getCreatedUser();
+        user.getPolls().remove(poll);
+        users.put(user.getUsername(), user);
     }
 
     // VoteOption Management
@@ -121,10 +125,16 @@ public class DomainManager {
         return voteOptions.get(voteOptionId);
     }
 
-    public Collection<VoteOption> getVoteOptionsByPollId(String pollId) {
-        Poll poll = polls.get(pollId);
+    public List<VoteOption> getVoteOptionsByPollId(String pollId) {
+        List<VoteOption> voteOptionsList = new ArrayList<>();
 
-        return poll.getOptions();
+        voteOptions.forEach((voteOptionKey, voteOption) -> {
+            if(voteOption.getPoll().getId().equals(pollId)) {
+                voteOptionsList.add(voteOption);
+            }
+        } );
+
+        return voteOptionsList;
     }
 
     // Vote Management
@@ -200,9 +210,7 @@ public class DomainManager {
         users.put(vote.getUser().getUsername(), vote.getUser());
 
         // Remove the vote from the voteOption and poll objects
-        vote.getOption().getPoll().getOptions().remove(vote.getOption());
         vote.getOption().getVotes().remove(vote);
         voteOptions.put(vote.getOption().getId(), vote.getOption());
-        vote.getOption().getPoll().getOptions().add(vote.getOption());
     }
 }

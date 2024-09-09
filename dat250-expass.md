@@ -5,7 +5,7 @@ This repository contains my solution to the poll app api assignment in DAT250 at
 
 ## What has been done
 As part of this assignment, I have made my solution for an api used in a poll app. The solution was made with spring boot, and I have divided the classes into 3 main packages
- - **Controller** - Contains all of the Controller classes. Decided to have 1 controller for each resource.
+ - **Controller** - Contains all of the Controller classes. Decided to have 1 controller for each resource. [View package](https://github.com/Ivhene/poll-app/tree/main/src/main/java/no/hvl/dat250/pollApp/controller)
  - **Entity** - Contains all the entities (resource) classes. These are the objects as defined in the domain model (see task description)
  - **Repo** - Contains the class used to store resources in memory. This could have also been defined as a service package, but decided to have it as a repo.
 

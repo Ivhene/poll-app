@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("polls/{pollId}/voteoptions/{voteoptionId}/votes")
 public class VoteController {
 

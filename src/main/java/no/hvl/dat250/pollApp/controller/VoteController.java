@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("polls/{pollId}/voteoptions/{voteoptionId}/votes")
 public class VoteController {
 

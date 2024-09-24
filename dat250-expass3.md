@@ -40,7 +40,7 @@ I did not encounter any relevant problems during this assignment, only thing was
 ![image](https://github.com/user-attachments/assets/8a6a2b96-b9d1-4dd9-8c3f-c49be0f4c028)
 
 # Map-reduce explained
-The map-reduce method I made first counts the number of items in each order, and afterwards adds together all the quantities with the same customer_id to show how many items each customer has ordered. The operation is useful as it can show the administrator of the database who orders the highest amount of products. 
+The map-reduce method I made first counts the number of items in each order, and afterwards adds together all the quantities with the same customer_id to show how many items each customer has ordered. The operation is useful as it can show the administrator of the database who orders the highest amount of products.
 
 # Pending issues
 None

@@ -45,8 +45,22 @@ Code for working towards docker database can be found [here](https://github.com/
 
 ## Task 2: Building you own dockerized application
 
-ADD LINK TO DOCKERFILE HERE
+The initial Dockerfile can be found [here](https://github.com/Ivhene/poll-app/blob/58441d4d1db13ae6882056bf8b28c758f83041a6/Dockerfile)
 
-BUILD IMAGE IN DISCORD
+![image](https://github.com/user-attachments/assets/7b69ee8e-4f7e-4de2-9f1f-493cf8ccb040)
 
-IMAGE OF RUNNING IMAGE
+![image](https://github.com/user-attachments/assets/749f3fd6-d7be-4e76-8a1e-e0a7dc8000de)
+
+![image](https://github.com/user-attachments/assets/25b94e01-4656-4c23-b6f3-9d10d8b7b122)
+
+The above images shows the application working before the improvements. For the improvements I had to use wsl because of getting errors when building on Windows.
+
+The updated Dockerfile can be found [here](https://github.com/Ivhene/poll-app/blob/main/Dockerfile)
+
+![image](https://github.com/user-attachments/assets/28143c29-25ea-463c-b16f-ea310fdab2f0)
+
+![image](https://github.com/user-attachments/assets/f1268f4a-268d-46bb-b2d9-c3ef1ac0130d)
+
+The website looks the same as it did before so no point showing that image again, but it is working.
+
+

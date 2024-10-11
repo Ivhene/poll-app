@@ -17,10 +17,10 @@ docker run -p 5432:5432 -e POSTGRES_USER=user -e POSTGRES_PASSWORD=testpassword1
 - e Only required environment variable is the password, but also added a username since I tried once not to do this and I wasnt able to use it since I couldnt generate a valid connection string
 
 proof its running after the command is executed
-![image](https://github.com/user-attachments/assets/73c067af-f2e1-48a2-9d28-3b2d5e270ed0)
+![image](https://github.com/user-attachments/assets/7bc64d1d-b0ca-48f5-a97a-d3e7c4248167)
 
 
-Logs:
+Logs (not the final one, but figured it would be a waste of time to show that I had done this again):
 ![image](https://github.com/user-attachments/assets/aa3f6b15-a5c3-43a5-a312-8ac9d532fdff)
 
 ![image](https://github.com/user-attachments/assets/acd33103-9d2a-442d-82b5-d6cd9372cfc0)

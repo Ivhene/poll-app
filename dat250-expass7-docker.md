@@ -41,3 +41,4 @@ The tables were automatically generated in the "public" schema, which is there b
 Code for working towards docker database can be found [here](https://github.com/Ivhene/dat250-jpa-tutorial)
 
 ## Task 2: Building you own dockerized application
+

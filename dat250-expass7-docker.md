@@ -25,6 +25,19 @@ Logs (not the final one, but figured it would be a waste of time to show that I 
 
 ![image](https://github.com/user-attachments/assets/acd33103-9d2a-442d-82b5-d6cd9372cfc0)
 
+Updated these settings in persistence.xml. I already used postgres in the previous assignment
+```xml
+            <!-- Database connection details -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres"/>
+            <property name="javax.persistence.jdbc.user" value="user"/>
+            <property name="javax.persistence.jdbc.password" value="testpassword123"/>
+```
 
+The tests succeded on first try for me
+![image](https://github.com/user-attachments/assets/9439b7c4-3c4b-4fae-b700-16f1b24309c6)
+
+The tables were automatically generated in the "public" schema, which is there by default. 
+
+Code for working towards database can be found [here](https://github.com/Ivhene/dat250-jpa-tutorial)
 
 ## Task 2: Building you own dockerized application
